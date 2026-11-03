@@ -5,7 +5,7 @@ type CountdownValues = { days: number; hours: number; minutes: number; seconds: 
 type CountdownState =
   { status: "countdown"; values: CountdownValues } | { status: "today" } | { status: "memory" };
 
-const birthday = new Date(2026, 10, 11);
+const birthday = new Date(2026, 10, 7);
 const dayMilliseconds = 86_400_000;
 
 function calculateCountdown(): CountdownState {
