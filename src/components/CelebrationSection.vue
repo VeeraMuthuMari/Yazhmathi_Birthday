@@ -4,6 +4,7 @@ import FloatingBalloons from "./FloatingBalloons.vue";
 import ParticleBackground from "./ParticleBackground.vue";
 import { useBirthdayAnimation } from "../composables/useBirthdayAnimation";
 import { useBirthdayAudio } from "../composables/useBirthdayAudio";
+import FloatingBabyPortraits from "./FloatingBabyPortraits.vue";
 
 const { celebrate } = useBirthdayAnimation();
 const { playChime } = useBirthdayAudio();
@@ -22,6 +23,7 @@ function celebrateWithSound() {
 
 <template>
   <section id="celebration" class="celebration-section">
+    <FloatingBabyPortraits scene="celebration" />
     <div v-for="firework in fireworks" :key="firework" class="firework" :class="`firework-${firework + 1}`">
       <span v-for="spark in 8" :key="spark" />
     </div>
@@ -42,8 +44,11 @@ function celebrateWithSound() {
     >
       TODAY, THE WHOLE SKY CELEBRATES YOU
     </p>
-    <h2 class="celebration-title">SHINE BRIGHT,<br /><i>VEERA YAZHMATHI!</i></h2>
-    <p class="celebration-subtitle">May Your Little World Always Be Full of Magic!</p>
+    <p class="eyebrow">OUR LITTLE STAR</p>
+    <h2 class="celebration-title">VEERA YAZHMATHI</h2>
+    <p class="celebration-subtitle">
+      Three Years of Love, Three Years of Magic, Forever Our Little Princess.
+    </p>
     <button class="celebrate-button" type="button" @click="celebrateWithSound">
       <Sparkles :size="16" /> Let&apos;s Celebrate
     </button>

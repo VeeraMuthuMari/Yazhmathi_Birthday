@@ -1,0 +1,1 @@
+import{_ as o}from"./BirthdayCake3D.vue_vue_type_script_setup_true_lang-Casuixu2.js";import"./tres-core-SRWOFR_P.js";import"./three-3aL1aw92.js";import"./vueuse-core-BpES_wic.js";import"./index-BH7fLveb.js";export{o as default};

@@ -2,6 +2,7 @@
 import { Sparkles } from "lucide-vue-next";
 import { useBirthdayAnimation } from "../composables/useBirthdayAnimation";
 import { useBirthdayAudio } from "../composables/useBirthdayAudio";
+import FloatingBabyPortraits from "./FloatingBabyPortraits.vue";
 import { useBirthdayStore } from "../stores/birthdayStore";
 
 const birthday = useBirthdayStore();
@@ -15,7 +16,8 @@ function toggleGift() {
 </script>
 
 <template>
-  <section class="gift-section">
+  <section id="gift" class="gift-section" :class="{ 'gift-revealed': birthday.giftOpen }">
+    <FloatingBabyPortraits scene="gift" />
     <div
       v-motion
       class="gift-copy"
@@ -25,7 +27,7 @@ function toggleGift() {
       <p class="eyebrow">SEALED WITH A SPARKLE</p>
       <h2>A little something<br /><i>just for you.</i></h2>
       <p class="section-intro">
-        There&apos;s a tiny bit of magic tucked inside. Open it when you&apos;re ready, princess.
+        There&apos;s a tiny bit of magic tucked inside. Open it when you&apos;re ready, little star.
       </p>
       <button class="text-button" type="button" @click="toggleGift">
         {{ birthday.giftOpen ? "Close your surprise ↑" : "Open your surprise ↓" }}

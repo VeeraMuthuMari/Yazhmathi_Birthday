@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useBirthdayCountdown } from "../composables/useBirthdayCountdown";
+import FloatingBabyPortraits from "./FloatingBabyPortraits.vue";
 
 const { state } = useBirthdayCountdown();
 const units = ["days", "hours", "minutes", "seconds"] as const;
@@ -7,6 +8,7 @@ const units = ["days", "hours", "minutes", "seconds"] as const;
 
 <template>
   <section id="countdown" class="countdown-section">
+    <FloatingBabyPortraits scene="countdown" />
     <div class="section-glow" />
     <div class="section-heading">
       <p class="eyebrow">A DATE WRITTEN IN STARDUST</p>
@@ -36,7 +38,7 @@ const units = ["days", "hours", "minutes", "seconds"] as const;
         :enter="{ opacity: 1, y: 0, transition: { duration: 700 } }"
         aria-live="polite"
       >
-        Today Is Veera Yazhmathi&apos;s Special Day!
+        It&apos;s Veera Yazhmathi&apos;s Special Day!
       </p>
       <p
         v-else
@@ -49,7 +51,7 @@ const units = ["days", "hours", "minutes", "seconds"] as const;
       </p>
     </div>
     <div class="date-note">
-      <span class="gold-dot" /> NOVEMBER 11 <span class="gold-dot" /> EVERY YEAR, FOREVER
+      <span class="gold-dot" /> NOVEMBER 7 <span class="gold-dot" /> EVERY YEAR, FOREVER
     </div>
   </section>
 </template>

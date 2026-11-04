@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ArrowDown, Sparkles } from "lucide-vue-next";
-import { defineAsyncComponent, onMounted, onUnmounted, ref } from "vue";
+import { ref } from "vue";
 import ParticleBackground from "./ParticleBackground.vue";
 import PremiumNavbar from "./PremiumNavbar.vue";
+import FloatingBabyPortraits from "./FloatingBabyPortraits.vue";
+import HeroCakeScene from "./HeroCakeScene.vue";
 import FloatingBalloons from "./FloatingBalloons.vue";
+import AnimatedBirthdayName from "./AnimatedBirthdayName.vue";
 import { useBirthdayAnimation } from "../composables/useBirthdayAnimation";
 import { useBirthdayAudio } from "../composables/useBirthdayAudio";
 import { useBirthdayStore } from "../stores/birthdayStore";
@@ -13,19 +16,6 @@ const { enterCelebration } = useBirthdayAnimation();
 const { toggleMusic } = useBirthdayAudio();
 const birthday = useBirthdayStore();
 const entering = ref(false);
-const sceneReady = ref(false);
-const heroScene = defineAsyncComponent(() => import("./BirthdayHeroScene.vue"));
-let sceneTimer: number | undefined;
-
-onMounted(() => {
-  sceneTimer = window.setTimeout(() => {
-    sceneReady.value = true;
-  }, 250);
-});
-
-onUnmounted(() => {
-  if (sceneTimer !== undefined) window.clearTimeout(sceneTimer);
-});
 
 async function enter() {
   if (entering.value) return;
@@ -40,39 +30,32 @@ async function enter() {
 </script>
 
 <template>
-  <section id="home" class="hero">
+  <section id="home" class="hero" :class="{ 'hero-entered': birthday.entered }">
     <div class="hero-grain" />
-    <div class="hero-orbit orbit-one" />
-    <div class="hero-orbit orbit-two" />
-    <component :is="heroScene" v-if="sceneReady" class="hero-three" />
+    <ParticleBackground :count="16" />
+    <FloatingBabyPortraits scene="hero" />
     <FloatingBalloons />
-    <ParticleBackground :count="28" />
+    <HeroCakeScene />
     <PremiumNavbar />
     <div class="hero-copy">
       <p
-        v-motion
-        class="eyebrow hero-eyebrow"
-        :initial="{ opacity: 0, y: 16 }"
-        :enter="{ opacity: 1, y: 0, transition: { delay: 250, duration: 700 } }"
+        class="eyebrow hero-eyebrow hero-reveal"
+        style="--hero-reveal-delay: 250ms"
       >
         A DAY AS SPECIAL AS YOU
       </p>
-      <h1
-        v-motion
-        :initial="{ opacity: 0, y: 24 }"
-        :enter="{ opacity: 1, y: 0, transition: { delay: 450, duration: 900 } }"
-      >
-        <span class="hero-kicker">HAPPY BIRTHDAY</span>
-        <span class="hero-name">Veera <i>Yazhmathi</i></span>
+      <h1 class="hero-reveal" style="--hero-reveal-delay: 450ms">
+        <span class="hero-kicker">HAPPY 3RD BIRTHDAY</span>
+        <AnimatedBirthdayName />
       </h1>
-      <p class="hero-subtitle">Three Years of Magic, Love &amp; Happiness!</p>
-      <div class="date-pill"><span /> 11 <b>•</b> 11 <b>•</b> 2026 <span /></div>
-      <button class="primary-button" type="button" :disabled="entering" @click="enter">
-        <Sparkles :size="16" />
-        {{ entering ? "The Magic Is All Yours" : "Enter the Magical Celebration" }}
-      </button>
+      <p class="hero-subtitle">Our Little Star, Our Biggest Happiness!</p>
+      <div class="date-pill"><span /> 07 <b>•</b> NOVEMBER <b>•</b> 2026 <span /></div>
     </div>
+    <button class="primary-button hero-enter-button" type="button" :disabled="entering" @click="enter">
+      <Sparkles :size="16" />
+      {{ entering ? "The Magic Is All Yours" : "Enter the Celebration" }}
+    </button>
     <div class="hero-caption"><span>01</span><span class="caption-line" /> A LITTLE WORLD, MADE FOR YOU</div>
-    <a class="scroll-cue" href="#countdown" aria-label="Scroll to countdown"><ArrowDown :size="16" /></a>
+    <a class="scroll-cue" href="#games" aria-label="Scroll to the birthday games"><ArrowDown :size="16" /></a>
   </section>
 </template>
