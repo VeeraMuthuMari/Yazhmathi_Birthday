@@ -4699,7 +4699,7 @@ body {
     linear-gradient(145deg, #211047, #32105c 58%, #101a3a);
 }
 
-.countdown-section > :not(.floating-portrait-world) {
+.countdown-section > :not(.floating-portrait-world):not(.section-glow) {
   position: relative;
   z-index: 2;
 }
@@ -5322,13 +5322,13 @@ body {
 
 @media (max-width: 720px) {
   .hero {
-    min-height: 840px;
-    height: 100svh;
-    max-height: 980px;
+    min-height: 760px;
+    height: max(760px, 100svh);
+    max-height: none;
   }
 
   .hero-copy {
-    top: 14%;
+    top: 13%;
     left: 50%;
     width: min(88vw, 420px);
     z-index: 8;
@@ -5370,13 +5370,25 @@ body {
     transform: translateX(-50%) translateY(-3px);
   }
 
-  .hero-cake-scene {
-    right: 18%;
-    bottom: 13%;
+  .hero-caption {
+    display: none;
+  }
+
+  .scroll-cue {
+    right: 20px;
+    bottom: 82px;
     left: auto;
-    width: 260px;
-    height: 270px;
+    transform: none;
+  }
+
+  .hero-cake-scene {
+    right: auto;
+    bottom: 15%;
+    left: 50%;
+    width: clamp(220px, 48vw, 290px);
+    height: clamp(220px, 48vw, 290px);
     opacity: 0.95;
+    transform: translateX(-50%);
   }
 
   .hero-cake-name {
@@ -5389,27 +5401,23 @@ body {
   }
 
   .portrait-world-hero .floating-portrait-1 {
-    top: 52%;
-    right: 9%;
-    width: clamp(175px, 48vw, 232px);
-    height: clamp(218px, 57vw, 302px);
+    top: 42%;
+    right: 8%;
+    width: clamp(120px, 26vw, 180px);
+    height: clamp(160px, 35vw, 230px);
     z-index: 2;
   }
 
   .portrait-world-hero .floating-portrait-2 {
-    top: 62%;
-    left: 5%;
-    width: 101px;
-    height: 138px;
+    top: 48%;
+    left: 6%;
+    width: clamp(70px, 12vw, 100px);
+    height: clamp(94px, 16vw, 135px);
     z-index: 1;
   }
 
   .portrait-world-hero .floating-portrait-3 {
-    top: 39%;
-    right: 1%;
-    width: 76px;
-    height: 106px;
-    z-index: 1;
+    display: none;
   }
 
   .countdown-section {
@@ -5423,20 +5431,21 @@ body {
   }
 
   .portrait-world-countdown .floating-portrait-1 {
-    top: 7%;
-    left: -30px;
-    width: 110px;
-    height: 145px;
+    top: 10px;
+    left: 50%;
+    width: 56px;
+    height: 72px;
+    margin-left: -28px;
   }
 
   .portrait-world-countdown .floating-portrait-2 {
-    right: -25px;
-    bottom: 4%;
-    width: 112px;
-    height: 150px;
+    right: 10px;
+    bottom: 6%;
+    width: 88px;
+    height: 116px;
   }
 
-  .countdown-section > :not(.floating-portrait-world) {
+  .countdown-section > :not(.floating-portrait-world):not(.section-glow) {
     z-index: 2;
   }
 
@@ -5627,47 +5636,33 @@ body {
 }
 
 @media (max-width: 430px) {
-  .hero {
-    min-height: 800px;
-  }
-
   .hero-copy {
-    top: 16%;
+    top: 15%;
   }
 
   .hero-name {
-    font-size: 42px;
+    font-size: clamp(36px, 10.5vw, 42px);
   }
 
   .hero-cake-scene {
-    right: auto;
-    left: 4%;
-    bottom: 18%;
-    width: 255px;
-    height: 270px;
+    bottom: 15%;
+    width: min(68vw, 235px);
+    height: min(68vw, 235px);
   }
 
   .portrait-world-hero .floating-portrait-1 {
-    top: 52%;
+    top: 38%;
     right: 8%;
-    width: 170px;
-    height: 230px;
+    width: clamp(100px, 29vw, 116px);
+    height: clamp(138px, 39vw, 152px);
     z-index: 2;
   }
 
   .portrait-world-hero .floating-portrait-2 {
-    top: 62%;
-    left: 5%;
-    width: 92px;
-    height: 126px;
-    z-index: 1;
-  }
-
-  .portrait-world-hero .floating-portrait-3 {
-    top: 40%;
-    right: 1%;
-    width: 62px;
-    height: 92px;
+    top: 42%;
+    left: 6%;
+    width: 64px;
+    height: 86px;
     z-index: 1;
   }
 

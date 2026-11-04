@@ -6,7 +6,7 @@ import { ExtrudeGeometry, PerspectiveCamera, Shape } from "three";
 import { onMounted, onUnmounted, reactive } from "vue";
 
 const reducedMotion = usePreferredReducedMotion();
-const spin = reactive({ y: -0.24 });
+const cakeMotion = reactive({ rotation: 0, lift: 0 });
 const camera = new PerspectiveCamera(35, 1, 0.1, 100);
 camera.position.set(0, 1.8, 7.8);
 const numberThreeShape = new Shape();
@@ -28,14 +28,17 @@ const numberThreeGeometry = new ExtrudeGeometry(numberThreeShape, {
   bevelSize: 0.025,
   bevelThickness: 0.025,
 });
-let spinTween: gsap.core.Tween | undefined;
+let cakeAnimation: gsap.core.Timeline | undefined;
 
 onMounted(() => {
   if (reducedMotion.value === "reduce") return;
-  spinTween = gsap.to(spin, { y: 0.24, duration: 12, repeat: -1, yoyo: true, ease: "sine.inOut" });
+  cakeAnimation = gsap
+    .timeline({ repeat: -1 })
+    .to(cakeMotion, { rotation: Math.PI * 2, duration: 24, ease: "none" }, 0)
+    .to(cakeMotion, { lift: 0.07, duration: 2, repeat: 5, yoyo: true, ease: "sine.inOut" }, 0);
 });
 
-onUnmounted(() => spinTween?.kill());
+onUnmounted(() => cakeAnimation?.kill());
 </script>
 
 <template>
@@ -45,7 +48,11 @@ onUnmounted(() => spinTween?.kill());
       <TresDirectionalLight :position="[4, 7, 5]" :intensity="3.2" cast-shadow />
       <TresPointLight :position="[-3, 3, 2]" :intensity="18" color="#b99aff" />
       <TresPointLight :position="[3, 4, -2]" :intensity="22" color="#f4d27a" />
-      <TresGroup :rotation="[0, spin.y, 0]" :position="[0, -0.8, 0]" :scale="1.02">
+      <TresGroup
+        :rotation="[0, cakeMotion.rotation, 0]"
+        :position="[0, -0.8 + cakeMotion.lift, 0]"
+        :scale="1.02"
+      >
         <TresGroup
           v-for="tier in [
             { y: 0.25, height: 0.72, radius: 1.45, color: '#fffdf8' },
@@ -65,24 +72,15 @@ onUnmounted(() => spinTween?.kill());
               :clearcoat-roughness="0.2"
             />
           </TresMesh>
-          <TresMesh
-            :position="[0, tier.height / 2 - 0.05, 0]"
-            :rotation="[Math.PI / 2, 0, 0]"
-          >
+          <TresMesh :position="[0, tier.height / 2 - 0.05, 0]" :rotation="[Math.PI / 2, 0, 0]">
             <TresTorusGeometry :args="[tier.radius * 0.98, 0.08, 12, 64]" />
             <TresMeshStandardMaterial :color="tier.color" :roughness="0.22" />
           </TresMesh>
-          <TresMesh
-            :position="[0, -tier.height / 2 + 0.07, 0]"
-            :rotation="[Math.PI / 2, 0, 0]"
-          >
+          <TresMesh :position="[0, -tier.height / 2 + 0.07, 0]" :rotation="[Math.PI / 2, 0, 0]">
             <TresTorusGeometry :args="[tier.radius * 1.015, 0.035, 10, 64]" />
             <TresMeshStandardMaterial color="#f4d27a" :metalness="0.78" :roughness="0.2" />
           </TresMesh>
-          <TresMesh
-            :position="[0, -tier.height / 2 + 0.14, 0]"
-            :rotation="[Math.PI / 2, 0, 0]"
-          >
+          <TresMesh :position="[0, -tier.height / 2 + 0.14, 0]" :rotation="[Math.PI / 2, 0, 0]">
             <TresTorusGeometry :args="[tier.radius * 1.018, 0.018, 8, 64]" />
             <TresMeshStandardMaterial color="#fff0bd" :metalness="0.65" :roughness="0.22" />
           </TresMesh>
@@ -148,12 +146,7 @@ onUnmounted(() => spinTween?.kill());
             <TresSphereGeometry :args="[0.075, 16, 16]" />
             <TresMeshBasicMaterial color="#ffe7a0" />
           </TresMesh>
-          <TresPointLight
-            :position="[0, 0.38, 0.08]"
-            :intensity="1.4"
-            color="#ffc75f"
-            :distance="1.8"
-          />
+          <TresPointLight :position="[0, 0.38, 0.08]" :intensity="1.4" color="#ffc75f" :distance="1.8" />
         </TresGroup>
         <TresMesh :geometry="numberThreeGeometry" :position="[0, 2.46, 0.12]">
           <TresMeshStandardMaterial color="#f4d27a" :metalness="0.8" :roughness="0.17" />

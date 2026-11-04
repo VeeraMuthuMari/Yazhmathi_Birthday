@@ -10,41 +10,30 @@ const birthday = useBirthdayStore();
 const reducedMotion = usePreferredReducedMotion();
 const photos = babyPhotoCollections[props.scene];
 
-function movePortraits(event: PointerEvent) {
+function movePortrait(event: PointerEvent) {
   if (event.pointerType !== "mouse" || reducedMotion.value === "reduce") return;
-  const world = event.currentTarget;
-  if (!(world instanceof HTMLElement)) return;
-  const bounds = world.getBoundingClientRect();
+  const portrait = event.currentTarget;
+  if (!(portrait instanceof HTMLElement)) return;
+  const bounds = portrait.getBoundingClientRect();
   const x = (event.clientX - bounds.left) / bounds.width - 0.5;
   const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-
-  world.querySelectorAll<HTMLElement>(".floating-portrait").forEach((portrait, index) => {
-    const depth = index + 1;
-    portrait.style.setProperty("--parallax-x", `${x * depth * -18}px`);
-    portrait.style.setProperty("--parallax-y", `${y * depth * -13}px`);
-  });
+  portrait.style.setProperty("--parallax-x", `${x * -18}px`);
+  portrait.style.setProperty("--parallax-y", `${y * -13}px`);
 }
 
-function resetPortraits(event: PointerEvent) {
-  const world = event.currentTarget;
-  if (!(world instanceof HTMLElement)) return;
-  world.querySelectorAll<HTMLElement>(".floating-portrait").forEach((portrait) => {
-    portrait.style.setProperty("--parallax-x", "0px");
-    portrait.style.setProperty("--parallax-y", "0px");
-  });
+function resetPortrait(event: PointerEvent) {
+  const portrait = event.currentTarget;
+  if (!(portrait instanceof HTMLElement)) return;
+  portrait.style.setProperty("--parallax-x", "0px");
+  portrait.style.setProperty("--parallax-y", "0px");
 }
 </script>
 
 <template>
   <div
     class="floating-portrait-world"
-    :class="[
-      `portrait-world-${scene}`,
-      { 'portrait-world-revealed': scene === 'gift' && birthday.giftOpen },
-    ]"
+    :class="[`portrait-world-${scene}`, { 'portrait-world-revealed': scene === 'gift' && birthday.giftOpen }]"
     aria-label="Floating baby photographs"
-    @pointermove="movePortraits"
-    @pointerleave="resetPortraits"
   >
     <button
       v-for="(photo, index) in photos"
@@ -54,6 +43,8 @@ function resetPortraits(event: PointerEvent) {
       type="button"
       :aria-label="`Open ${photo.alt}`"
       @click="birthday.openPhoto(photo.id)"
+      @pointermove="movePortrait"
+      @pointerleave="resetPortrait"
     >
       <img
         :src="photo.src"
@@ -62,9 +53,7 @@ function resetPortraits(event: PointerEvent) {
         :fetchpriority="scene === 'hero' && index === 0 ? 'high' : 'auto'"
         decoding="async"
       />
-      <span class="portrait-photo-note">{{
-        photo.isDummy ? "SAMPLE PHOTO" : "VEERA YAZHMATHI"
-      }}</span>
+      <span class="portrait-photo-note">{{ photo.isDummy ? "SAMPLE PHOTO" : "VEERA YAZHMATHI" }}</span>
     </button>
   </div>
 </template>

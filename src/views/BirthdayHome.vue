@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Heart } from "lucide-vue-next";
 import BirthdayHero from "../components/BirthdayHero.vue";
+import BirthdayCountdown from "../components/BirthdayCountdown.vue";
 import GameNavigation from "../components/GameNavigation.vue";
 import DeveloperFooter from "../components/DeveloperFooter.vue";
 import PhotoViewer from "../components/PhotoViewer.vue";
@@ -52,6 +53,7 @@ function goHome() {
   <main class="min-h-screen birthday-page">
     <div class="birthday-content">
       <BirthdayHero @enter="enterExperience" />
+      <BirthdayCountdown />
       <GameNavigation @home="goHome" />
       <footer class="footer">
         <div class="footer-heart"><Heart :size="20" fill="currentColor" /></div>

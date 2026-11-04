@@ -20,7 +20,9 @@ const { toggleMusic } = useBirthdayAudio();
     </span>
     <span class="birthday-song-copy">
       <span class="birthday-song-title">A little birthday song</span>
-      <span class="birthday-song-status">{{ birthday.soundOn ? "NOW PLAYING" : "TAP TO PLAY" }}</span>
+      <span class="birthday-song-status">{{
+        birthday.soundOn ? "NOW PLAYING" : "TAP TO PLAY"
+      }}</span>
     </span>
     <span class="birthday-song-action" aria-hidden="true">
       <Pause v-if="birthday.soundOn" :size="15" />
